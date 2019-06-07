@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://tilesets/dirt_jungle/dirt_jungle_adv.tres" type="TileSet" id=1]
-[ext_resource path="res://Vec1.gd" type="Script" id=2]
+[ext_resource path="res://Vec1.gripless.gd" type="Script" id=2]
+[ext_resource path="res://GripDetection.gd" type="Script" id=3]
+[ext_resource path="res://Vec1.gripless.raycast.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 12, 16 )
@@ -15,11 +17,33 @@ format = 1
 tile_data = PoolIntArray( -262148, 12, 1, -327673, 12, 0, -196612, 12, 1, -262137, 12, 0, -131076, 12, 1, -196601, 12, 0, -65540, 12, 1, -131065, 12, 0, -4, 12, 1, -65529, 12, 0, 65532, 12, 1, 7, 12, 0, 131068, 12, 1, 65543, 12, 0, 196604, 12, 1, 131079, 12, 0, 262140, 12, 1, 262141, 4, 1, 262142, 4, 1, 262143, 4, 1, 196608, 4, 1, 196609, 4, 1, 196610, 4, 1, 196611, 4, 1, 196612, 4, 1, 196613, 4, 1, 196614, 4, 1, 196615, 12, 0, 327676, 4, 65536, 327677, 4, 65537, 327678, 4, 65537, 327679, 4, 65537, 262144, 4, 65537, 262145, 4, 65537, 262146, 4, 65537, 262147, 4, 65537, 262148, 4, 65537, 262149, 4, 65537, 262150, 4, 65537, 262151, 4, 65538, 393212, 12, 0, 393213, 15, 0, 393214, 15, 0, 393215, 15, 0, 327680, 15, 0, 327681, 15, 0, 327682, 15, 0, 327683, 15, 0, 327684, 15, 0, 327685, 15, 0, 327686, 15, 0, 327687, 12, 1, 458748, 12, 0, 458749, 15, 0, 458750, 15, 0, 458751, 15, 0, 393216, 15, 0, 393217, 15, 0, 393218, 15, 0, 393219, 15, 0, 393220, 15, 0, 393221, 15, 0, 393222, 15, 0, 393223, 12, 1, 524284, 10, 0, 524285, 10, 1, 524286, 10, 1, 524287, 10, 1, 458752, 10, 1, 458753, 10, 1, 458754, 10, 1, 458755, 10, 1, 458756, 10, 1, 458757, 10, 1, 458758, 10, 1, 458759, 10, 2 )
 
 [node name="Vec1" type="KinematicBody2D" parent="."]
+visible = false
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Camera2D" type="Camera2D" parent="Vec1"]
-current = true
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vec1"]
+visible = false
+shape = SubResource( 1 )
+
+[node name="GripDetection" type="Node2D" parent="Vec1"]
+visible = false
+script = ExtResource( 3 )
+
+[node name="Vec2" type="KinematicBody2D" parent="."]
+position = Vector2( 86.5949, 27.436 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Camera2D" type="Camera2D" parent="Vec2"]
+current = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vec2"]
 shape = SubResource( 1 )
 
