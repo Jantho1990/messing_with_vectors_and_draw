@@ -66,9 +66,11 @@ func create_raycast(grip_vector, range_value):
 
 func get_raycast_result(raycast):
 	if raycast.is_colliding():
+		var distance = raycast.get_collision_point().distance_to(raycast.global_position)
 		return {
 			"position": raycast.get_collision_point(),
-			"collider": raycast.get_collider()
+			"collider": raycast.get_collider(),
+			"distance": distance
 		}
 	return {}
 
@@ -93,11 +95,12 @@ func calculate_grippable_surfaces(pos = position):
 			"raycast": raycast
 		}
 		if hit:
-			var distance = result.position.distance_to(global_position + grip_vector) # need global_position because position just returns this node, which is relative to its parent
+#			var distance = result.position.distance_to(raycast.global_position) # need global_position because position just returns this node, which is relative to its parent
+#			breakpoint
 			ret[key] = {
 				"hit": hit,
-				"distance": distance,
-				"contact": in_contact_range(distance),
+				"distance": result.distance,
+				"contact": in_contact_range(result.distance),
 				"result": result,
 				"raycast": raycast,
 				"grip_vector": grip_vector
