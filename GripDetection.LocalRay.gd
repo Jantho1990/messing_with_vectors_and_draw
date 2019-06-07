@@ -65,6 +65,7 @@ func create_raycast(grip_vector, range_value):
 	return ray
 
 func get_raycast_result(raycast):
+	raycast.force_raycast_update() # this is needed because the parent has moved since the last calculation, which throws off the distance calculation; feels ugly but the alternative is copying parent motion into the distance calculation, which seems worse
 	if raycast.is_colliding():
 		var distance = raycast.get_collision_point().distance_to(raycast.global_position)
 		return {
