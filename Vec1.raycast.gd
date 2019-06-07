@@ -8,19 +8,9 @@ const SPEED = 200
 
 var motion = Vector2(0, 0)
 
-var ray = RayCast2D.new()
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	queue_free()
-	ray.position += Vector2(20, 0)
-	ray.cast_to = Vector2(50, 0)
-	ray.exclude_parent = true
-	ray.collide_with_areas = true
-	ray.collide_with_bodies = true
-	ray.enabled = true
-	add_child(ray)
-#	$GripDetection.set_dimensions(get_width(), get_height())
+	$GripDetection.set_dimensions(get_width(), get_height())
 
 func _physics_process(delta):
 	var speed = SPEED
@@ -46,7 +36,7 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("rotate_right"):
 		rotation += 0.03
 
-#	calculate_grippable_surfaces()
+	calculate_grippable_surfaces()
 	motion = move_and_slide(motion)
 
 	if Input.is_action_just_pressed("reset_rotation"):
@@ -56,18 +46,6 @@ func _physics_process(delta):
 
 func _draw():
 	draw_rect(Rect2(0 - get_half_width(), 0 - get_half_height(), get_width(), get_height()), Color(0, 0, 0))
-	
-	draw_ray()
-	
-
-func draw_ray():
-	var color = Color(1, 0, 0)
-	if ray.is_colliding():
-		color = Color(0, 0, 1)
-		var coll = ray.get_collider()
-#		breakpoint
-#		print(ray.get_collider())
-	draw_line(ray.position, ray.position + ray.cast_to, color)
 
 func calculate_grippable_surfaces(pos = position):
 	return $GripDetection.calculate_grippable_surfaces(position)
@@ -83,12 +61,6 @@ func get_width():
 
 func get_half_width():
 	return $CollisionShape2D.shape.extents.x
-
-func ray_is_colliding():
-	var collider = ray.get_collider()
-	if collider:
-		return true
-	return false
 
 func reset_rotation():
 	rotation = 0
