@@ -12,6 +12,7 @@ var ray = RayCast2D.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	ray.position += Vector2(20, 0)
 	ray.cast_to = Vector2(50, 0)
 	ray.exclude_parent = true
 	ray.collide_with_areas = true
@@ -62,7 +63,10 @@ func draw_ray():
 	var color = Color(1, 0, 0)
 	if ray.is_colliding():
 		color = Color(0, 0, 1)
-	draw_line(ray.position, ray.cast_to, color)
+		var coll = ray.get_collider()
+#		breakpoint
+#		print(ray.get_collider())
+	draw_line(ray.position, ray.position + ray.cast_to, color)
 
 func calculate_grippable_surfaces(pos = position):
 	return $GripDetection.calculate_grippable_surfaces(position)

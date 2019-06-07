@@ -11,6 +11,7 @@ var motion = Vector2(0, 0)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
+	queue_free()
 #	$GripDetection.set_dimensions(get_width(), get_height())
 
 func _physics_process(delta):
