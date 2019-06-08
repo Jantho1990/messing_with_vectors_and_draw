@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://tilesets/dirt_jungle/dirt_jungle_adv.tres" type="TileSet" id=1]
 [ext_resource path="res://Vec1.gripless.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Vec1.gripless.raycast.gd" type="Script" id=4]
 [ext_resource path="res://Vec1.raycast.gd" type="Script" id=5]
 [ext_resource path="res://GripDetection.LocalRay.gd" type="Script" id=6]
+[ext_resource path="res://CornerDetection.gd" type="Script" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 12, 16 )
@@ -63,4 +64,8 @@ shape = SubResource( 1 )
 
 [node name="GripDetection" type="Node2D" parent="Vec3"]
 script = ExtResource( 6 )
+
+[node name="CornerDetection" type="Node2D" parent="Vec3/GripDetection"]
+position = Vector2( -88.3096, 64.3031 )
+script = ExtResource( 7 )
 
