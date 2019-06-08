@@ -12,6 +12,7 @@ var motion = Vector2(0, 0)
 func _ready():
 	$GripDetection.set_dimensions(get_width(), get_height())
 
+var printed = false
 func _physics_process(delta):
 	var speed = SPEED
 	if Input.is_action_pressed("slow"):
@@ -32,15 +33,22 @@ func _physics_process(delta):
 		motion.y = 0
 
 	if Input.is_action_pressed("rotate_left"):
-		rotation -= 0.03
+		rotation_degrees -= 5
 	elif Input.is_action_pressed("rotate_right"):
-		rotation += 0.03
+		rotation_degrees += 5
 
 	calculate_grippable_surfaces()
 	motion = move_and_slide(motion)
 
 	if Input.is_action_just_pressed("reset_rotation"):
 		reset_rotation()
+
+	if $GripDetection.in_corner():
+		if not printed:
+			print($GripDetection.detect_corner_type())
+			printed = true
+	else:
+		printed = false
 
 	update()
 

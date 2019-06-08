@@ -1,10 +1,10 @@
 extends Node2D
 
-const THRESHOLD = 3
+const THRESHOLD = 1
 
 var grip_vectors = {}
 var grippable_surface = {}
-var grip_range = 15
+var grip_range = 21
 
 var width = 1 # start at 1 to prevent division by 0
 var height = 1 # start at 1 to prevent division by 0
@@ -141,3 +141,50 @@ func get_width():
 
 func get_half_width():
 	return width / 2
+
+# Identify what kind of corner we are in.
+func detect_corner_type():
+	# Need to have various configurations of
+	# surface detections which indicate what
+	# kind of corner we are hitting.
+	#var hits_and_contacts = get_surface_hits() + (get_surface_contacts() * 2) # multiplying contacts to distinguish their bitmasks from the hits
+	var contacts_and_hits = get_surface_contacts_and_hits()
+#	print(contacts_and_hits)
+	match contacts_and_hits:
+		["left", "up", _, "up-right", "up-left", ..]:
+			return "up left 90"
+		["right", "up", _, "up-right", "up-left", ..]:
+			return "up right 90"
+		["left", "down", "down-right", "down-left", ..]:
+			return "down left 90"
+		["right", "down", "down-right", "down-left", ..]:
+			return "down right 90"
+		_:
+			return ""
+
+func get_surface_contacts():
+	var ret = []
+	for key in grippable_surface:
+		var surface = grippable_surface[key]
+		if surface.contact:
+			ret.push_back(key)
+	return ret
+
+func get_surface_contacts_and_hits():
+	var ret = []
+	for key in grippable_surface:
+		var surface = grippable_surface[key]
+		if surface.contact or surface.hit:
+			ret.push_back(key)
+	return ret
+
+func get_surface_hits():
+	var ret = []
+	for key in grippable_surface:
+		var surface = grippable_surface[key]
+		if surface.hit:
+			ret.push_back(key)
+	return ret
+
+func in_corner():
+	return detect_corner_type() != ""
